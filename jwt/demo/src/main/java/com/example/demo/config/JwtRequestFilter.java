@@ -19,29 +19,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        String authorizationHeader = request.getHeader("Authorization");
+protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
+    String authorizationHeader = request.getHeader("Authorization");
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String token = authorizationHeader.substring(7);
-            if (jwtUtil.validateToken(token)) {
-                String username = jwtUtil.getUsernameFromToken(token);
-                // Add username to the request (optional)
-                request.setAttribute("username", username);
-            } else {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
+    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        String token = authorizationHeader.substring(7);
+        System.out.println("Token received: " + token);
+
+        if (jwtUtil.validateToken(token)) {
+            String username = jwtUtil.getUsernameFromToken(token);
+            System.out.println("Authenticated user: " + username);
+            request.setAttribute("username", username); // Optional
+        } else {
+            System.out.println("Invalid token");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
-
-        filterChain.doFilter(request, response);
+    } else {
+        System.out.println("Authorization header is missing or does not start with 'Bearer '");
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        // Exclude the login endpoint from the filter
-        String path = request.getServletPath();
-        return path.equals("/login");
-    }
+    filterChain.doFilter(request, response);
+}
 }

@@ -21,4 +21,11 @@ public class AuthController {
         }
         throw new RuntimeException("Invalid username or password");
     }
+
+    @GetMapping("/home")
+    public String test() {
+        // Hardcoded user for demonstration
+        return "Hello world";
+    }
+
 }

@@ -34,12 +34,18 @@ public class JwtUtil {
     // Validate JWT token
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            System.out.println("Token claims: " + claims.getBody()); // Debug
             return true;
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token expired");
+            return false;
         } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("Token invalid");
             return false;
         }
     }
+    
 
     // Extract username from JWT token
     public String getUsernameFromToken(String token) {
