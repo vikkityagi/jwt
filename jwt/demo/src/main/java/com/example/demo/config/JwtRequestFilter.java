@@ -37,4 +37,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Exclude the login endpoint from the filter
+        String path = request.getServletPath();
+        return path.equals("/login");
+    }
 }

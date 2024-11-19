@@ -7,7 +7,7 @@ import com.example.demo.model.User;
 import com.example.demo.util.JwtUtil;
 
 @RestController
-@RequestMapping("/auth")
+// @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
