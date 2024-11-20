@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,12 @@ public class AuthController {
             return jwtUtil.generateToken(user.getUsername());
         }
         throw new RuntimeException("Invalid username or password");
+        
     }
 
     @GetMapping("/home")
     public String test() {
+        System.out.println(" print knkjbcjdcdscklkm");
         // Hardcoded user for demonstration
         return "Hello world";
     }

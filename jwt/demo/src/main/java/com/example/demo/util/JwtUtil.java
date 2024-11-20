@@ -11,7 +11,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private String secret = generatedSecretKey(); // Replace with a secure key
-    private int jwtExpirationInMs = 3600000;  // Token validity: 1 hour
+    private int jwtExpirationInMs = 60000;  // Token validity: 1 hour
 
     private String generatedSecretKey(){
         SecureRandom random = new SecureRandom();
